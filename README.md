@@ -1,5 +1,7 @@
 ﻿<div align="center">
 
+<img src="assets/atliq_logo.jpg" alt="AtliQ Hardware Logo" width="90" height="90" style="border-radius:16px;"/>
+
 <img src="assets/banner.jpg" alt="AtliQ Hardware - Sales and Finance Analysis" width="100%"/>
 
 # 📊 AtliQ Hardware — Sales & Finance Analysis
@@ -240,3 +242,4 @@ Made with ❤️ and lots of Excel formulas 📐
 ---
 
 *This project was completed as part of the Codebasics Data Analytics Bootcamp guided by [Codebasics](https://codebasics.io)*
+
