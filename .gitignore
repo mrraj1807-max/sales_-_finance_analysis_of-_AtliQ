@@ -20,3 +20,7 @@ venv/
 
 # Logs
 *.log
+
+# Large datasets (>25MB — tracked via Git LFS or download from Codebasics)
+data/raw/fact_sales_monthly.csv
+data/raw/fact_sales_monthly_with_cost.csv
