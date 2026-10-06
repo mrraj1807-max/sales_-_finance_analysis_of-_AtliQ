@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AtliQ Hardware - Sales & Finance Dashboard</title>
+  <meta name="description" content="Interactive Sales and Finance Analytics Dashboard for AtliQ Hardware covering FY2019-FY2021 across 23 global markets."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #070b14;
+      --bg-card: #0d1526;
+      --border: rgba(0,212,170,0.15);
+      --border-hover: rgba(0,212,170,0.4);
+      --accent: #00d4aa;
+      --accent-2: #4f8ef7;
+      --accent-3: #f7c94f;
+      --accent-red: #f75f4f;
+      --text-primary: #e8f0fe;
+      --text-secondary: #8899aa;
+      --shadow-glow: 0 0 30px rgba(0,212,170,0.12);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 20% 10%, rgba(0,212,170,0.05) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 80% 80%, rgba(79,142,247,0.05) 0%, transparent 60%); pointer-events: none; z-index: 0; }
+    .header { position: relative; z-index: 1; padding: 48px 32px 32px; text-align: center; border-bottom: 1px solid var(--border); background: linear-gradient(180deg, rgba(0,212,170,0.05) 0%, transparent 100%); }
+    .header-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.3); color: var(--accent); font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 20px; }
+    .header h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.15; margin-bottom: 12px; }
+    .header p { color: var(--text-secondary); font-size: 16px; max-width: 600px; margin: 0 auto 24px; line-height: 1.6; }
+    .header-tags { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    .tag { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-secondary); font-size: 12px; padding: 4px 12px; border-radius: 100px; }
+    .nav { position: sticky; top: 0; z-index: 100; background: rgba(7,11,20,0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 12px 32px; display: flex; gap: 4px; overflow-x: auto; }
+    .nav-btn { background: transparent; border: none; color: var(--text-secondary); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 8px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+    .nav-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+    .nav-btn.active { color: var(--accent); background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.2); }
+    .main { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
+    .section { display: none; } .section.active { display: block; }
+    .section-header { margin-bottom: 28px; }
+    .section-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .section-header p { color: var(--text-secondary); font-size: 14px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .kpi-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; position: relative; overflow: hidden; transition: all 0.3s; }
+    .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0; transition: opacity 0.3s; }
+    .kpi-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: var(--shadow-glow); }
+    .kpi-card:hover::before { opacity: 1; }
+    .kpi-icon { font-size: 28px; margin-bottom: 12px; }
+    .kpi-value { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 4px; }
+    .kpi-label { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .kpi-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 100px; }
+    .kpi-badge.up { background: rgba(0,212,170,0.15); color: var(--accent); }
+    .kpi-badge.down { background: rgba(247,95,79,0.15); color: var(--accent-red); }
+    .kpi-badge.neutral { background: rgba(79,142,247,0.15); color: var(--accent-2); }
+    .chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 20px; margin-bottom: 24px; }
+    .chart-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; }
+    .chart-card:hover { border-color: var(--border-hover); box-shadow: var(--shadow-glow); }
+    .chart-card.full { grid-column: 1 / -1; }
+    .chart-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+    .chart-subtitle { font-size: 12px; color: var(--text-secondary); margin-bottom: 20px; }
+    .chart-canvas-wrap { position: relative; height: 260px; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .data-table th { background: rgba(0,212,170,0.08); color: var(--accent); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+    .data-table td { padding: 10px 14px; color: var(--text-secondary); border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.2s; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.03); color: var(--text-primary); }
+    .data-table td:first-child { color: var(--text-primary); font-weight: 500; }
+    .bar-cell { display: flex; align-items: center; gap: 10px; }
+    .bar-track { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 3px; background: var(--accent); }
+    .bar-fill.blue { background: var(--accent-2); }
+    .positive { color: var(--accent) !important; font-weight: 600; }
+    .negative { color: var(--accent-red) !important; font-weight: 600; }
+    .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 24px; }
+    .insight-card { background: linear-gradient(135deg, rgba(0,212,170,0.05), rgba(79,142,247,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .insight-card h4 { font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+    .insight-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .footer { text-align: center; padding: 32px; color: #445566; font-size: 12px; border-top: 1px solid var(--border); margin-top: 40px; }
+    .footer a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 768px) { .header { padding: 32px 16px 24px; } .nav { padding: 8px 16px; } .main { padding: 24px 16px; } .chart-grid { grid-template-columns: 1fr; } .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div class="header-badge">Analytics Dashboard</div>
+  <h1>AtliQ Hardware<br/>Sales &amp; Finance Analysis</h1>
+  <p>End-to-end business intelligence across 23 global markets &middot; FY2019 - FY2021 &middot; Built in Microsoft Excel</p>
+  <div class="header-tags">
+    <span class="tag">Power Query</span><span class="tag">Pivot Tables</span><span class="tag">DAX Formulas</span><span class="tag">Sales Analytics</span><span class="tag">Finance Analytics</span><span class="tag">23 Markets</span><span class="tag">189 Customers</span>
+  </div>
+</div>
+<nav class="nav">
+  <button class="nav-btn active" onclick="showSection('overview',this)">Overview</button>
+  <button class="nav-btn" onclick="showSection('sales',this)">Sales Analysis</button>
+  <button class="nav-btn" onclick="showSection('finance',this)">Finance</button>
+  <button class="nav-btn" onclick="showSection('customers',this)">Customers</button>
+  <button class="nav-btn" onclick="showSection('markets',this)">Markets</button>
+  <button class="nav-btn" onclick="showSection('targets',this)">Targets</button>
+</nav>
+<main class="main">
+  <!-- OVERVIEW -->
+  <div class="section active" id="overview">
+    <div class="section-header"><h2>Executive Overview</h2><p>Key performance indicators across all fiscal years</p></div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-icon">💰</div><div class="kpi-value">₹599M</div><div class="kpi-label">FY2021 Net Sales</div><span class="kpi-badge up">↑ 204.5% YoY</span></div>
+      <div class="kpi-card"><div class="kpi-icon">📈</div><div class="kpi-value">161.6%</div><div class="kpi-label">2-Year CAGR</div><span class="kpi-badge up">FY19 → FY21</span></div>
+      <div class="kpi-card"><div class="kpi-icon">💹</div><div class="kpi-value">36.4%</div><div class="kpi-label">Gross Margin FY21</div><span class="kpi-badge down">↓ from 41.4% (FY19)</span></div>
+      <div class="kpi-card"><div class="kpi-icon">🌍</div><div class="kpi-value">23</div><div class="kpi-label">Global Markets</div><span class="kpi-badge neutral">APAC · EU · NA</span></div>
+      <div class="kpi-card"><div class="kpi-icon">👥</div><div class="kpi-value">189</div><div class="kpi-label">Customers</div><span class="kpi-badge neutral">3 channels</span></div>
+      <div class="kpi-card"><div class="kpi-icon">📦</div><div class="kpi-value">260</div><div class="kpi-label">Products Sold</div><span class="kpi-badge neutral">of 298 catalog</span></div>
+      <div class="kpi-card"><div class="kpi-icon">🛒</div><div class="kpi-value">800K</div><div class="kpi-label">Transactions</div><span class="kpi-badge neutral">FY2021</span></div>
+      <div class="kpi-card"><div class="kpi-icon">⚠️</div><div class="kpi-value">-9.17%</div><div class="kpi-label">Avg Target Variance</div><span class="kpi-badge down">All 23 markets missed</span></div>
+    </div>
+    <div class="chart-grid">
+      <div class="chart-card"><div class="chart-title">Revenue Growth (FY19-FY21)</div><div class="chart-subtitle">Net Sales in ₹ Millions by Fiscal Year</div><div class="chart-canvas-wrap"><canvas id="yearlyChart"></canvas></div></div>
+      <div class="chart-card"><div class="chart-title">Gross Margin Trend</div><div class="chart-subtitle">GM% declining as scale increases</div><div class="chart-canvas-wrap"><canvas id="marginChart"></canvas></div></div>
+      <div class="chart-card"><div class="chart-title">Platform Distribution (FY21)</div><div class="chart-subtitle">Brick &amp; Mortar vs E-Commerce</div><div class="chart-canvas-wrap"><canvas id="platformChart"></canvas></div></div>
+      <div class="chart-card"><div class="chart-title">Channel Mix (FY21)</div><div class="chart-subtitle">Retailer · Direct · Distributor</div><div class="chart-canvas-wrap"><canvas id="channelChart"></canvas></div></div>
+    </div>
+    <div class="insight-grid">
+      <div class="insight-card"><h4>🚀 Explosive Growth</h4><p>AtliQ Hardware grew from ₹87.5M to ₹598.9M in just 2 years — a 204.5% YoY jump in FY2021, driven by strong demand across all regions and product categories.</p></div>
+      <div class="insight-card"><h4>⚠️ Margin Pressure</h4><p>Gross Margin % declined from 41.4% (FY19) to 36.4% (FY21). Rapid scaling and competitive pricing in new markets are squeezing profitability.</p></div>
+      <div class="insight-card"><h4>🎯 Target Miss</h4><p>Despite strong absolute growth, all 23 markets missed their FY2021 Net Sales targets. Poland (-18.1%) and Canada (-14.5%) saw the largest shortfalls.</p></div>
+    </div>
+  </div>
+  <!-- SALES -->
+  <div class="section" id="sales">
+    <div class="section-header"><h2>Sales Analysis</h2><p>Monthly trends, division performance, and product category breakdown</p></div>
+    <div class="chart-grid">
+      <div class="chart-card full"><div class="chart-title">Monthly Sales Trend (FY2021)</div><div class="chart-subtitle">Brick &amp; Mortar vs E-Commerce Net Sales</div><div class="chart-canvas-wrap" style="height:300px"><canvas id="monthlyChart"></canvas></div></div>
+      <div class="chart-card"><div class="chart-title">Division Revenue (FY21)</div><div class="chart-subtitle">Net Sales &amp; Gross Margin % by Division</div><div class="chart-canvas-wrap"><canvas id="divisionChart"></canvas></div></div>
+      <div class="chart-card"><div class="chart-title">Top Product Categories (FY21)</div><div class="chart-subtitle">Net Sales by Category in ₹M</div><div class="chart-canvas-wrap"><canvas id="categoryChart"></canvas></div></div>
+    </div>
+    <div class="chart-card" style="margin-bottom:20px">
+      <div class="chart-title">Product Category Performance</div><div class="chart-subtitle">Ranked by FY2021 Net Sales</div><br/>
+      <table class="data-table"><thead><tr><th>Category</th><th>Net Sales (FY21)</th><th>Share</th></tr></thead><tbody>
+        <tr><td>⌨️ Keyboard</td><td class="positive">₹105.8M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>17.7%</div></td></tr>
+        <tr><td>🔲 Processors</td><td class="positive">₹96.3M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:91%"></div></div>16.1%</div></td></tr>
+        <tr><td>💻 Personal Laptop</td><td>₹93.1M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:88%"></div></div>15.5%</div></td></tr>
+        <tr><td>🖱️ Mouse</td><td>₹83.3M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:79%"></div></div>13.9%</div></td></tr>
+        <tr><td>🎮 Gaming Laptop</td><td>₹64.0M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div>10.7%</div></td></tr>
+        <tr><td>💾 External SSDs</td><td>₹46.5M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:44%"></div></div>7.8%</div></td></tr>
+        <tr><td>📡 Wi-Fi Extender</td><td>₹43.0M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:41%"></div></div>7.2%</div></td></tr>
+        <tr><td>🖥️ Graphic Card</td><td>₹26.3M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div>4.4%</div></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+  <!-- FINANCE -->
+  <div class="section" id="finance">
+    <div class="section-header"><h2>Finance Analysis</h2><p>P&amp;L metrics — Gross Margin trends and profitability by division</p></div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-icon">💰</div><div class="kpi-value">₹218M</div><div class="kpi-label">Gross Profit FY21</div><span class="kpi-badge up">36.4% GM%</span></div>
+      <div class="kpi-card"><div class="kpi-icon">📉</div><div class="kpi-value">-5.0pp</div><div class="kpi-label">GM% Decline</div><span class="kpi-badge down">FY19 to FY21</span></div>
+      <div class="kpi-card"><div class="kpi-icon">🏭</div><div class="kpi-value">₹381M</div><div class="kpi-label">COGS FY21 (est.)</div><span class="kpi-badge down">63.6% of revenue</span></div>
+    </div>
+    <div class="chart-grid">
+      <div class="chart-card full"><div class="chart-title">P&amp;L by Fiscal Year</div><div class="chart-subtitle">Net Sales vs Gross Profit vs GM% across FY2019, FY2020, FY2021</div><div class="chart-canvas-wrap" style="height:300px"><canvas id="plChart"></canvas></div></div>
+      <div class="chart-card"><div class="chart-title">Gross Margin % by Division</div><div class="chart-subtitle">FY2021 — All divisions near 36%</div><div class="chart-canvas-wrap"><canvas id="divMarginChart"></canvas></div></div>
+      <div class="chart-card"><div class="chart-title">COGS vs Gross Profit (FY21)</div><div class="chart-subtitle">Cost structure breakdown</div><div class="chart-canvas-wrap"><canvas id="costChart"></canvas></div></div>
+    </div>
+    <div class="insight-grid">
+      <div class="insight-card"><h4>📊 Healthy Margins</h4><p>All three divisions maintain &gt;36% Gross Margin, with Networking &amp; Storage leading at 36.7%. This indicates strong pricing power despite competition.</p></div>
+      <div class="insight-card"><h4>📉 Margin Erosion Risk</h4><p>The 5pp decline in GM% over 2 years (41.4% to 36.4%) warrants attention. As the company scales, maintaining margins through cost control is critical.</p></div>
+    </div>
+  </div>
+  <!-- CUSTOMERS -->
+  <div class="section" id="customers">
+    <div class="section-header"><h2>Customer Analysis</h2><p>Top customers by Net Sales and Year-over-Year growth in FY2021</p></div>
+    <div class="chart-grid">
+      <div class="chart-card"><div class="chart-title">Top 10 Customers — Net Sales (FY21)</div><div class="chart-subtitle">In ₹ Millions</div><div class="chart-canvas-wrap"><canvas id="customerSalesChart"></canvas></div></div>
+      <div class="chart-card"><div class="chart-title">Top 10 Customers — YoY Growth</div><div class="chart-subtitle">% Growth FY20 to FY21</div><div class="chart-canvas-wrap"><canvas id="customerGrowthChart"></canvas></div></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Customer Performance Table</div><div class="chart-subtitle">Top 10 customers ranked by FY2021 Net Sales</div><br/>
+      <table class="data-table"><thead><tr><th>#</th><th>Customer</th><th>Net Sales (FY21)</th><th>YoY Growth</th><th>Bar</th></tr></thead><tbody>
+        <tr><td>1</td><td>Amazon</td><td>₹82.1M</td><td class="positive">+118.9%</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div></td></tr>
+        <tr><td>2</td><td>Atliq e Store</td><td>₹53.0M</td><td class="positive">+123.8%</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:64%"></div></div></div></td></tr>
+        <tr><td>3</td><td>AltiQ Exclusive</td><td>₹52.8M</td><td class="positive">+238.6%</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:64%"></div></div></div></td></tr>
+        <tr><td>4</td><td>Sage</td><td>₹20.7M</td><td class="positive">+221.5%</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:25%"></div></div></div></td></tr>
+        <tr><td>5</td><td>Flipkart</td><td>₹19.3M</td><td class="positive">+131.0%</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:23%"></div></div></div></td></tr>
+        <tr><td>6</td><td>Leader</td><td>₹18.8M</td><td class="positive">+214.8%</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:23%"></div></div></div></td></tr>
+        <tr><td>7</td><td>Neptune</td><td>₹16.1M</td><td class="positive">+371.5%</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div></div></td></tr>
+        <tr><td>8</td><td>Ebay</td><td>₹15.2M</td><td class="positive">+142.2%</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:18%"></div></div></div></td></tr>
+        <tr><td>9</td><td>Electricalsocity</td><td>₹12.4M</td><td class="positive">+258.8%</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div></div></td></tr>
+        <tr><td>10</td><td>Synthetic</td><td>₹12.2M</td><td class="positive">+176.0%</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div></div></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+  <!-- MARKETS -->
+  <div class="section" id="markets">
+    <div class="section-header"><h2>Market Analysis</h2><p>Regional performance and top countries by Net Sales in FY2021</p></div>
+    <div class="chart-grid">
+      <div class="chart-card"><div class="chart-title">Regional Sales Share (FY21)</div><div class="chart-subtitle">APAC · EU · NA contribution</div><div class="chart-canvas-wrap"><canvas id="regionChart"></canvas></div></div>
+      <div class="chart-card"><div class="chart-title">Top 10 Countries (FY21)</div><div class="chart-subtitle">Net Sales in ₹ Millions</div><div class="chart-canvas-wrap"><canvas id="countryChart"></canvas></div></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Country Performance Table</div><div class="chart-subtitle">Top 10 markets by FY2021 Net Sales</div><br/>
+      <table class="data-table"><thead><tr><th>#</th><th>Market</th><th>Region</th><th>Net Sales (FY21)</th><th>Share</th></tr></thead><tbody>
+        <tr><td>1</td><td>India</td><td>APAC</td><td class="positive">₹161.3M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>26.9%</div></td></tr>
+        <tr><td>2</td><td>USA</td><td>NA</td><td class="positive">₹87.8M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:54%"></div></div>14.7%</div></td></tr>
+        <tr><td>3</td><td>South Korea</td><td>APAC</td><td>₹49.0M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:30%"></div></div>8.2%</div></td></tr>
+        <tr><td>4</td><td>Canada</td><td>NA</td><td>₹35.1M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:22%"></div></div>5.9%</div></td></tr>
+        <tr><td>5</td><td>United Kingdom</td><td>EU</td><td>₹34.2M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:21%"></div></div>5.7%</div></td></tr>
+        <tr><td>6</td><td>Philippines</td><td>APAC</td><td>₹31.9M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div>5.3%</div></td></tr>
+        <tr><td>7</td><td>France</td><td>EU</td><td>₹25.9M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:16%"></div></div>4.3%</div></td></tr>
+        <tr><td>8</td><td>China</td><td>APAC</td><td>₹22.9M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:14%"></div></div>3.8%</div></td></tr>
+        <tr><td>9</td><td>Australia</td><td>APAC</td><td>₹21.0M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:13%"></div></div>3.5%</div></td></tr>
+        <tr><td>10</td><td>Indonesia</td><td>APAC</td><td>₹18.4M</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:11%"></div></div>3.1%</div></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+  <!-- TARGETS -->
+  <div class="section" id="targets">
+    <div class="section-header"><h2>Target vs. Actual (FY2021)</h2><p>All 23 markets missed their Net Sales targets — here's by how much</p></div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-icon">🎯</div><div class="kpi-value">23/23</div><div class="kpi-label">Markets Below Target</div><span class="kpi-badge down">100% miss rate</span></div>
+      <div class="kpi-card"><div class="kpi-icon">📉</div><div class="kpi-value">-9.17%</div><div class="kpi-label">Average Variance</div><span class="kpi-badge down">vs FY21 targets</span></div>
+      <div class="kpi-card"><div class="kpi-icon">🔴</div><div class="kpi-value">Poland</div><div class="kpi-label">Worst Miss</div><span class="kpi-badge down">-18.13% variance</span></div>
+      <div class="kpi-card"><div class="kpi-icon">🟡</div><div class="kpi-value">Japan</div><div class="kpi-label">Best (Least Miss)</div><span class="kpi-badge down">-4.12% variance</span></div>
+    </div>
+    <div class="chart-card full" style="margin-bottom:20px">
+      <div class="chart-title">Target vs. Actual by Market (FY2021)</div><div class="chart-subtitle">All markets in ₹ Millions — Sorted by variance %</div>
+      <div class="chart-canvas-wrap" style="height:400px"><canvas id="targetChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Market Target Variance Ranking</div><div class="chart-subtitle">Sorted from worst miss to best</div><br/>
+      <table class="data-table"><thead><tr><th>#</th><th>Market</th><th>Region</th><th>Actual</th><th>Target</th><th>Variance %</th></tr></thead><tbody>
+        <tr><td>1</td><td>Poland</td><td>EU</td><td>₹5.2M</td><td>₹6.1M</td><td class="negative">-18.13%</td></tr>
+        <tr><td>2</td><td>Canada</td><td>NA</td><td>₹35.1M</td><td>₹40.1M</td><td class="negative">-14.45%</td></tr>
+        <tr><td>3</td><td>Spain</td><td>EU</td><td>₹12.6M</td><td>₹14.4M</td><td class="negative">-14.15%</td></tr>
+        <tr><td>4</td><td>Indonesia</td><td>APAC</td><td>₹18.4M</td><td>₹20.8M</td><td class="negative">-12.93%</td></tr>
+        <tr><td>5</td><td>Germany</td><td>EU</td><td>₹12.0M</td><td>₹13.5M</td><td class="negative">-12.72%</td></tr>
+        <tr><td>6</td><td>New Zealand</td><td>APAC</td><td>₹11.4M</td><td>₹12.8M</td><td class="negative">-12.30%</td></tr>
+        <tr><td>7</td><td>USA</td><td>NA</td><td>₹87.8M</td><td>₹98.0M</td><td class="negative">-11.66%</td></tr>
+        <tr><td>8</td><td>Australia</td><td>APAC</td><td>₹21.0M</td><td>₹23.2M</td><td class="negative">-10.54%</td></tr>
+        <tr><td>9</td><td>India</td><td>APAC</td><td>₹161.3M</td><td>₹170.8M</td><td class="negative">-5.92%</td></tr>
+        <tr><td>10</td><td>Portugal</td><td>EU</td><td>₹11.8M</td><td>₹12.3M</td><td class="negative">-4.29%</td></tr>
+        <tr><td>11</td><td>Japan</td><td>APAC</td><td>₹7.9M</td><td>₹8.2M</td><td class="negative">-4.12%</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</main>
+<footer class="footer">
+  <p>AtliQ Hardware — Sales &amp; Finance Analysis &nbsp;|&nbsp; Built with Microsoft Excel · Power Query · DAX</p>
+  <p style="margin-top:6px"><a href="https://github.com/your-github-username/sales_-_finance_analysis_of-_AtliQ">Star on GitHub</a> &nbsp;|&nbsp; <a href="../reports/">View PDF Reports</a></p>
+  <p style="margin-top:8px; color: #334">Guided by Codebasics · Data Analytics Bootcamp</p>
+</footer>
+<script>
+const C={accent:'#00d4aa',blue:'#4f8ef7',yellow:'#f7c94f',red:'#f75f4f',text:'#8899aa',grid:'rgba(255,255,255,0.05)'};
+const dOpts=(yL='')=>({responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:C.text,font:{family:'Inter',size:11},boxWidth:12}},tooltip:{backgroundColor:'#111d35',borderColor:'rgba(0,212,170,0.3)',borderWidth:1,titleColor:'#e8f0fe',bodyColor:C.text,padding:10,cornerRadius:8}},scales:{x:{ticks:{color:C.text,font:{size:11}},grid:{color:C.grid}},y:{ticks:{color:C.text,font:{size:11}},grid:{color:C.grid}}}});
+function showSection(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');renderSectionCharts(id);}
+const rendered=new Set();
+function renderSectionCharts(s){if(rendered.has(s))return;rendered.add(s);if(s==='overview')renderOv();else if(s==='sales')renderSa();else if(s==='finance')renderFi();else if(s==='customers')renderCu();else if(s==='markets')renderMa();else if(s==='targets')renderTa();}
+function renderOv(){
+  new Chart(document.getElementById('yearlyChart'),{type:'bar',data:{labels:['FY2019','FY2020','FY2021'],datasets:[{label:'Net Sales (M)',data:[87.5,196.7,598.9],backgroundColor:['rgba(0,212,170,0.3)','rgba(0,212,170,0.5)','rgba(0,212,170,0.85)'],borderColor:C.accent,borderWidth:2,borderRadius:8}]},options:{...dOpts('M'),plugins:{...dOpts().plugins,legend:{display:false}}}});
+  new Chart(document.getElementById('marginChart'),{type:'line',data:{labels:['FY2019','FY2020','FY2021'],datasets:[{label:'GM%',data:[41.4,37.3,36.4],borderColor:C.yellow,backgroundColor:'rgba(247,201,79,0.1)',fill:true,tension:0.4,pointBackgroundColor:C.yellow,pointRadius:6}]},options:dOpts('%')});
+  new Chart(document.getElementById('platformChart'),{type:'doughnut',data:{labels:['Brick & Mortar','E-Commerce'],datasets:[{data:[71.1,28.9],backgroundColor:[C.accent,C.blue],borderColor:'#0d1526',borderWidth:3,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:C.text,padding:16,font:{size:12}}},tooltip:{backgroundColor:'#111d35',borderColor:'rgba(0,212,170,0.3)',borderWidth:1,titleColor:'#e8f0fe',bodyColor:C.text,padding:10}},cutout:'65%'}});
+  new Chart(document.getElementById('channelChart'),{type:'doughnut',data:{labels:['Retailer','Direct','Distributor'],datasets:[{data:[70.5,17.7,11.8],backgroundColor:[C.accent,C.blue,C.yellow],borderColor:'#0d1526',borderWidth:3,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:C.text,padding:16,font:{size:12}}},tooltip:{backgroundColor:'#111d35',borderColor:'rgba(0,212,170,0.3)',borderWidth:1,titleColor:'#e8f0fe',bodyColor:C.text,padding:10}},cutout:'65%'}});
+}
+function renderSa(){
+  const months=['Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug'];
+  const brick=[24.5,28.0,37.6,34.7,24.8,20.8,29.5,30.3,32.6,27.3,33.1,30.0];
+  const ecom=[10.3,12.0,14.0,13.1,9.4,8.5,10.8,13.3,11.8,14.1,11.0,13.0];
+  new Chart(document.getElementById('monthlyChart'),{type:'bar',data:{labels:months,datasets:[{label:'Brick & Mortar',data:brick,backgroundColor:'rgba(0,212,170,0.7)',borderRadius:4,stack:'s'},{label:'E-Commerce',data:ecom,backgroundColor:'rgba(79,142,247,0.7)',borderRadius:4,stack:'s'}]},options:dOpts('M')});
+  new Chart(document.getElementById('divisionChart'),{type:'bar',data:{labels:['Peripherals &\nAccessories','Personal\nComputers','Networking &\nStorage'],datasets:[{label:'Net Sales (M)',data:[338.4,165.8,94.7],backgroundColor:['rgba(0,212,170,0.7)','rgba(79,142,247,0.7)','rgba(247,201,79,0.7)'],borderRadius:6,yAxisID:'y'},{label:'GM%',data:[36.4,36.3,36.7],type:'line',borderColor:C.red,backgroundColor:'transparent',yAxisID:'y1',pointBackgroundColor:C.red,pointRadius:6,tension:0.3}]},options:{...dOpts(),scales:{x:{ticks:{color:C.text,font:{size:10}},grid:{color:C.grid}},y:{ticks:{color:C.text},grid:{color:C.grid}},y1:{position:'right',ticks:{color:C.red},grid:{display:false}}}}});
+  new Chart(document.getElementById('categoryChart'),{type:'bar',data:{labels:['Keyboard','Processors','Personal\nLaptop','Mouse','Gaming\nLaptop','Ext. SSD','Wi-Fi\nExtender','Graphic\nCard'],datasets:[{label:'Net Sales (M)',data:[105.8,96.3,93.1,83.3,64.0,46.5,43.0,26.3],backgroundColor:'rgba(79,142,247,0.7)',borderColor:C.blue,borderWidth:1,borderRadius:6}]},options:{...dOpts('M'),indexAxis:'y',plugins:{...dOpts().plugins,legend:{display:false}}}});
+}
+function renderFi(){
+  new Chart(document.getElementById('plChart'),{type:'bar',data:{labels:['FY2019','FY2020','FY2021'],datasets:[{label:'Net Sales (M)',data:[87.5,196.7,598.9],backgroundColor:'rgba(0,212,170,0.6)',borderRadius:6,yAxisID:'y'},{label:'Gross Profit (M)',data:[36.2,73.4,218.2],backgroundColor:'rgba(79,142,247,0.6)',borderRadius:6,yAxisID:'y'},{label:'GM%',data:[41.4,37.3,36.4],type:'line',borderColor:C.yellow,backgroundColor:'transparent',yAxisID:'y1',pointBackgroundColor:C.yellow,pointRadius:6,tension:0.4}]},options:{...dOpts(),scales:{x:{ticks:{color:C.text},grid:{color:C.grid}},y:{ticks:{color:C.text},grid:{color:C.grid}},y1:{position:'right',ticks:{color:C.yellow},grid:{display:false}}}}});
+  new Chart(document.getElementById('divMarginChart'),{type:'bar',data:{labels:['Networking &\nStorage','Peripherals &\nAccessories','Personal\nComputers'],datasets:[{label:'GM%',data:[36.7,36.4,36.3],backgroundColor:['rgba(0,212,170,0.8)','rgba(79,142,247,0.8)','rgba(247,201,79,0.8)'],borderRadius:8}]},options:{...dOpts('%'),plugins:{...dOpts().plugins,legend:{display:false}},scales:{x:{ticks:{color:C.text,font:{size:10}},grid:{color:C.grid}},y:{min:35,max:38,ticks:{color:C.text},grid:{color:C.grid}}}}});
+  new Chart(document.getElementById('costChart'),{type:'doughnut',data:{labels:['COGS (63.6%)','Gross Profit (36.4%)'],datasets:[{data:[63.6,36.4],backgroundColor:[C.red,C.accent],borderColor:'#0d1526',borderWidth:3,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'bottom',labels:{color:C.text,padding:16,font:{size:12}}},tooltip:{backgroundColor:'#111d35',borderColor:'rgba(0,212,170,0.3)',borderWidth:1,titleColor:'#e8f0fe',bodyColor:C.text,padding:10}}}});
+}
+function renderCu(){
+  const cust=['Amazon','Atliq e Store','AltiQ Exclusive','Sage','Flipkart','Leader','Neptune','Ebay','Electricalsocity','Synthetic'];
+  const sales=[82.1,53.0,52.8,20.7,19.3,18.8,16.1,15.2,12.4,12.2];
+  const growth=[118.9,123.8,238.6,221.5,131.0,214.8,371.5,142.2,258.8,176.0];
+  new Chart(document.getElementById('customerSalesChart'),{type:'bar',data:{labels:cust,datasets:[{label:'Net Sales (M)',data:sales,backgroundColor:'rgba(0,212,170,0.7)',borderColor:C.accent,borderWidth:1,borderRadius:6}]},options:{...dOpts('M'),indexAxis:'y',plugins:{...dOpts().plugins,legend:{display:false}}}});
+  new Chart(document.getElementById('customerGrowthChart'),{type:'bar',data:{labels:cust,datasets:[{label:'YoY Growth %',data:growth,backgroundColor:growth.map(v=>v>200?'rgba(0,212,170,0.8)':'rgba(79,142,247,0.7)'),borderRadius:6}]},options:{...dOpts('%'),indexAxis:'y',plugins:{...dOpts().plugins,legend:{display:false}}}});
+}
+function renderMa(){
+  new Chart(document.getElementById('regionChart'),{type:'doughnut',data:{labels:['APAC (56.2%)','EU (23.3%)','NA (20.5%)'],datasets:[{data:[56.2,23.3,20.5],backgroundColor:[C.accent,C.blue,C.yellow],borderColor:'#0d1526',borderWidth:3,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'bottom',labels:{color:C.text,padding:16,font:{size:12}}},tooltip:{backgroundColor:'#111d35',borderColor:'rgba(0,212,170,0.3)',borderWidth:1,titleColor:'#e8f0fe',bodyColor:C.text,padding:10}}}});
+  new Chart(document.getElementById('countryChart'),{type:'bar',data:{labels:['India','USA','South Korea','Canada','UK','Philippines','France','China','Australia','Indonesia'],datasets:[{label:'Net Sales (M)',data:[161.3,87.8,49.0,35.1,34.2,31.9,25.9,22.9,21.0,18.4],backgroundColor:['rgba(0,212,170,0.85)','rgba(0,212,170,0.7)','rgba(79,142,247,0.7)','rgba(79,142,247,0.65)','rgba(79,142,247,0.6)','rgba(0,212,170,0.55)','rgba(79,142,247,0.55)','rgba(0,212,170,0.5)','rgba(0,212,170,0.45)','rgba(0,212,170,0.4)'],borderRadius:6}]},options:{...dOpts('M'),indexAxis:'y',plugins:{...dOpts().plugins,legend:{display:false}}}});
+}
+function renderTa(){
+  const m=['Poland','Canada','Spain','Indonesia','Germany','New Zealand','Austria','USA','Sweden','Australia','Norway','Bangladesh','Pakistan','China','Italy','South Korea','UK','France','Netherlands','Philippines','India','Portugal','Japan'];
+  const a=[5.2,35.1,12.6,18.4,12.0,11.4,2.8,87.8,1.8,21.0,13.7,7.0,5.7,22.9,11.7,49.0,34.2,25.9,8.0,31.9,161.3,11.8,7.9];
+  const t=[6.1,40.1,14.4,20.8,13.5,12.8,3.2,98.0,2.0,23.2,15.1,7.7,6.2,25.0,12.8,53.3,37.1,28.1,8.6,34.4,170.8,12.3,8.2];
+  new Chart(document.getElementById('targetChart'),{type:'bar',data:{labels:m,datasets:[{label:'Actual (M)',data:a,backgroundColor:'rgba(0,212,170,0.7)',borderRadius:4},{label:'Target (M)',data:t,backgroundColor:'rgba(247,201,79,0.6)',borderRadius:4}]},options:dOpts('M')});
+}
+renderOv();rendered.add('overview');
+</script>
+</body>
+</html>
