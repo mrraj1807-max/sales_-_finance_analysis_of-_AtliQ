@@ -1,0 +1,587 @@
+{
+  "kpis": {
+    "fy21_net_sales": 598877095.0,
+    "fy20_net_sales": 196690953.0,
+    "fy19_net_sales": 87478258.0,
+    "yoy_growth_fy21": 204.5,
+    "yoy_growth_fy20": 124.8,
+    "cagr_fy19_fy21": 161.6,
+    "gross_margin_fy21": 36.4,
+    "gross_profit_fy21": 218162833.0,
+    "markets": 23,
+    "customers": 189,
+    "products_sold": 260,
+    "products_catalog": 298,
+    "transactions": 799962,
+    "markets_vs_target": 23,
+    "markets_below_target": 23,
+    "target_variance_pct": -9.17
+  },
+  "yearly": [
+    {
+      "fy": 2019,
+      "net_sales": 87478258.0
+    },
+    {
+      "fy": 2020,
+      "net_sales": 196690953.0
+    },
+    {
+      "fy": 2021,
+      "net_sales": 598877095.0
+    }
+  ],
+  "monthly": [
+    {
+      "ym": "2018-09",
+      "brick": 4791106.0,
+      "ecom": 1671549.0
+    },
+    {
+      "ym": "2018-10",
+      "brick": 5273081.0,
+      "ecom": 2765455.0
+    },
+    {
+      "ym": "2018-11",
+      "brick": 7982635.0,
+      "ecom": 2753157.0
+    },
+    {
+      "ym": "2018-12",
+      "brick": 8078912.0,
+      "ecom": 3357864.0
+    },
+    {
+      "ym": "2019-01",
+      "brick": 4794055.0,
+      "ecom": 1727090.0
+    },
+    {
+      "ym": "2019-02",
+      "brick": 4021942.0,
+      "ecom": 2058755.0
+    },
+    {
+      "ym": "2019-03",
+      "brick": 4784145.0,
+      "ecom": 1628057.0
+    },
+    {
+      "ym": "2019-04",
+      "brick": 4460797.0,
+      "ecom": 1860924.0
+    },
+    {
+      "ym": "2019-05",
+      "brick": 4788224.0,
+      "ecom": 1701427.0
+    },
+    {
+      "ym": "2019-06",
+      "brick": 4079361.0,
+      "ecom": 2104999.0
+    },
+    {
+      "ym": "2019-07",
+      "brick": 4826450.0,
+      "ecom": 1657233.0
+    },
+    {
+      "ym": "2019-08",
+      "brick": 4484671.0,
+      "ecom": 1826370.0
+    },
+    {
+      "ym": "2019-09",
+      "brick": 12502878.0,
+      "ecom": 4598967.0
+    },
+    {
+      "ym": "2019-10",
+      "brick": 13592572.0,
+      "ecom": 7032781.0
+    },
+    {
+      "ym": "2019-11",
+      "brick": 21389561.0,
+      "ecom": 7303502.0
+    },
+    {
+      "ym": "2019-12",
+      "brick": 20737356.0,
+      "ecom": 9164464.0
+    },
+    {
+      "ym": "2020-01",
+      "brick": 12550946.0,
+      "ecom": 4583546.0
+    },
+    {
+      "ym": "2020-02",
+      "brick": 10431322.0,
+      "ecom": 5501617.0
+    },
+    {
+      "ym": "2020-03",
+      "brick": 1125829.0,
+      "ecom": 985552.0
+    },
+    {
+      "ym": "2020-04",
+      "brick": 1704546.0,
+      "ecom": 6053904.0
+    },
+    {
+      "ym": "2020-05",
+      "brick": 2188051.0,
+      "ecom": 7744521.0
+    },
+    {
+      "ym": "2020-06",
+      "brick": 4524093.0,
+      "ecom": 10358704.0
+    },
+    {
+      "ym": "2020-07",
+      "brick": 7312064.0,
+      "ecom": 8767577.0
+    },
+    {
+      "ym": "2020-08",
+      "brick": 11516993.0,
+      "ecom": 5019610.0
+    },
+    {
+      "ym": "2020-09",
+      "brick": 32853105.0,
+      "ecom": 11963965.0
+    },
+    {
+      "ym": "2020-10",
+      "brick": 36086382.0,
+      "ecom": 18505250.0
+    },
+    {
+      "ym": "2020-11",
+      "brick": 55777232.0,
+      "ecom": 18565182.0
+    },
+    {
+      "ym": "2020-12",
+      "brick": 54336064.0,
+      "ecom": 23722618.0
+    },
+    {
+      "ym": "2021-01",
+      "brick": 32910738.0,
+      "ecom": 11878179.0
+    },
+    {
+      "ym": "2021-02",
+      "brick": 27653226.0,
+      "ecom": 14169853.0
+    },
+    {
+      "ym": "2021-03",
+      "brick": 33161321.0,
+      "ecom": 10789026.0
+    },
+    {
+      "ym": "2021-04",
+      "brick": 30268476.0,
+      "ecom": 13272962.0
+    },
+    {
+      "ym": "2021-05",
+      "brick": 32567682.0,
+      "ecom": 11832534.0
+    },
+    {
+      "ym": "2021-06",
+      "brick": 27349413.0,
+      "ecom": 14119451.0
+    },
+    {
+      "ym": "2021-07",
+      "brick": 33076809.0,
+      "ecom": 10970465.0
+    },
+    {
+      "ym": "2021-08",
+      "brick": 30013710.0,
+      "ecom": 13033453.0
+    }
+  ],
+  "region_fy21": [
+    {
+      "region": "APAC",
+      "net_sales": 336308919.0,
+      "share_pct": 56.2
+    },
+    {
+      "region": "EU",
+      "net_sales": 139728348.0,
+      "share_pct": 23.3
+    },
+    {
+      "region": "NA",
+      "net_sales": 122839828.0,
+      "share_pct": 20.5
+    }
+  ],
+  "division_fy21": [
+    {
+      "division": "Peripherals & Accessories",
+      "net_sales": 338378682.0,
+      "share_pct": 56.5,
+      "margin_pct": 36.4
+    },
+    {
+      "division": "Personal Computers",
+      "net_sales": 165763777.0,
+      "share_pct": 27.7,
+      "margin_pct": 36.3
+    },
+    {
+      "division": "Networking & Storage",
+      "net_sales": 94734636.0,
+      "share_pct": 15.8,
+      "margin_pct": 36.7
+    }
+  ],
+  "category_fy21": [
+    {
+      "category": "Keyboard",
+      "net_sales": 105840185.0
+    },
+    {
+      "category": "Processors",
+      "net_sales": 96324616.0
+    },
+    {
+      "category": "Personal Laptop",
+      "net_sales": 93100693.0
+    },
+    {
+      "category": "Mouse",
+      "net_sales": 83258586.0
+    },
+    {
+      "category": "Gaming Laptop",
+      "net_sales": 63994701.0
+    },
+    {
+      "category": "External Solid State Drives",
+      "net_sales": 46465210.0
+    },
+    {
+      "category": "Wi fi extender",
+      "net_sales": 42997793.0
+    },
+    {
+      "category": "Graphic Card",
+      "net_sales": 26317182.0
+    }
+  ],
+  "top_countries_fy21": [
+    {
+      "market": "India",
+      "net_sales": 161262512.0
+    },
+    {
+      "market": "USA",
+      "net_sales": 87780947.0
+    },
+    {
+      "market": "South Korea",
+      "net_sales": 48965338.0
+    },
+    {
+      "market": "Canada",
+      "net_sales": 35058881.0
+    },
+    {
+      "market": "United Kingdom",
+      "net_sales": 34152244.0
+    },
+    {
+      "market": "Philiphines",
+      "net_sales": 31857231.0
+    },
+    {
+      "market": "France",
+      "net_sales": 25944172.0
+    },
+    {
+      "market": "China",
+      "net_sales": 22886336.0
+    },
+    {
+      "market": "Australia",
+      "net_sales": 20991334.0
+    },
+    {
+      "market": "Indonesia",
+      "net_sales": 18414577.0
+    }
+  ],
+  "top_customers_fy21": [
+    {
+      "customer": "Amazon",
+      "net_sales": 82089924.0,
+      "growth_pct": 118.9
+    },
+    {
+      "customer": "Atliq e Store",
+      "net_sales": 52979607.0,
+      "growth_pct": 123.8
+    },
+    {
+      "customer": "AltiQ Exclusive",
+      "net_sales": 52819016.0,
+      "growth_pct": 238.6
+    },
+    {
+      "customer": "Sage",
+      "net_sales": 20697520.0,
+      "growth_pct": 221.5
+    },
+    {
+      "customer": "Flipkart",
+      "net_sales": 19285759.0,
+      "growth_pct": 131.0
+    },
+    {
+      "customer": "Leader",
+      "net_sales": 18801025.0,
+      "growth_pct": 214.8
+    },
+    {
+      "customer": "Neptune",
+      "net_sales": 16114191.0,
+      "growth_pct": 371.5
+    },
+    {
+      "customer": "Ebay",
+      "net_sales": 15171676.0,
+      "growth_pct": 142.2
+    },
+    {
+      "customer": "Electricalsocity",
+      "net_sales": 12420698.0,
+      "growth_pct": 258.8
+    },
+    {
+      "customer": "Synthetic",
+      "net_sales": 12186269.0,
+      "growth_pct": 176.0
+    }
+  ],
+  "platform_fy21": [
+    {
+      "name": "Brick & Mortar",
+      "net_sales": 426054158.0,
+      "share_pct": 71.1
+    },
+    {
+      "name": "E-Commerce",
+      "net_sales": 172822937.0,
+      "share_pct": 28.9
+    }
+  ],
+  "channel_fy21": [
+    {
+      "name": "Retailer",
+      "net_sales": 422417507.0,
+      "share_pct": 70.5
+    },
+    {
+      "name": "Direct",
+      "net_sales": 105798622.0,
+      "share_pct": 17.7
+    },
+    {
+      "name": "Distributor",
+      "net_sales": 70660966.0,
+      "share_pct": 11.8
+    }
+  ],
+  "target_comp": [
+    {
+      "market": "Poland",
+      "actual": 5189452.0,
+      "target": 6130191.0,
+      "variance_pct": -18.13,
+      "region": "EU"
+    },
+    {
+      "market": "Canada",
+      "actual": 35058881.0,
+      "target": 40126280.0,
+      "variance_pct": -14.45,
+      "region": "NA"
+    },
+    {
+      "market": "Spain",
+      "actual": 12618990.0,
+      "target": 14404168.0,
+      "variance_pct": -14.15,
+      "region": "EU"
+    },
+    {
+      "market": "Indonesia",
+      "actual": 18414577.0,
+      "target": 20796416.0,
+      "variance_pct": -12.93,
+      "region": "APAC"
+    },
+    {
+      "market": "Germany",
+      "actual": 12006271.0,
+      "target": 13533640.0,
+      "variance_pct": -12.72,
+      "region": "EU"
+    },
+    {
+      "market": "Newzealand",
+      "actual": 11402160.0,
+      "target": 12804468.0,
+      "variance_pct": -12.3,
+      "region": "APAC"
+    },
+    {
+      "market": "Austria",
+      "actual": 2840298.0,
+      "target": 3173675.0,
+      "variance_pct": -11.74,
+      "region": "EU"
+    },
+    {
+      "market": "USA",
+      "actual": 87780947.0,
+      "target": 98016133.0,
+      "variance_pct": -11.66,
+      "region": "NA"
+    },
+    {
+      "market": "Sweden",
+      "actual": 1767821.0,
+      "target": 1964258.0,
+      "variance_pct": -11.11,
+      "region": "EU"
+    },
+    {
+      "market": "Australia",
+      "actual": 20991334.0,
+      "target": 23204036.0,
+      "variance_pct": -10.54,
+      "region": "APAC"
+    },
+    {
+      "market": "Norway",
+      "actual": 13677507.0,
+      "target": 15113150.0,
+      "variance_pct": -10.5,
+      "region": "EU"
+    },
+    {
+      "market": "Bangladesh",
+      "actual": 6950494.0,
+      "target": 7667374.0,
+      "variance_pct": -10.31,
+      "region": "APAC"
+    },
+    {
+      "market": "Pakistan",
+      "actual": 5656740.0,
+      "target": 6180859.0,
+      "variance_pct": -9.27,
+      "region": "APAC"
+    },
+    {
+      "market": "China",
+      "actual": 22886336.0,
+      "target": 24952433.0,
+      "variance_pct": -9.03,
+      "region": "APAC"
+    },
+    {
+      "market": "Italy",
+      "actual": 11717810.0,
+      "target": 12767354.0,
+      "variance_pct": -8.96,
+      "region": "EU"
+    },
+    {
+      "market": "South Korea",
+      "actual": 48965338.0,
+      "target": 53326653.0,
+      "variance_pct": -8.91,
+      "region": "APAC"
+    },
+    {
+      "market": "United Kingdom",
+      "actual": 34152244.0,
+      "target": 37131733.0,
+      "variance_pct": -8.72,
+      "region": "EU"
+    },
+    {
+      "market": "France",
+      "actual": 25944172.0,
+      "target": 28133809.0,
+      "variance_pct": -8.44,
+      "region": "EU"
+    },
+    {
+      "market": "Netherlands",
+      "actual": 7984235.0,
+      "target": 8640173.0,
+      "variance_pct": -8.22,
+      "region": "EU"
+    },
+    {
+      "market": "Philiphines",
+      "actual": 31857231.0,
+      "target": 34354372.0,
+      "variance_pct": -7.84,
+      "region": "APAC"
+    },
+    {
+      "market": "India",
+      "actual": 161262512.0,
+      "target": 170814109.0,
+      "variance_pct": -5.92,
+      "region": "APAC"
+    },
+    {
+      "market": "Portugal",
+      "actual": 11829547.0,
+      "target": 12337302.0,
+      "variance_pct": -4.29,
+      "region": "EU"
+    },
+    {
+      "market": "Japan",
+      "actual": 7922197.0,
+      "target": 8248983.0,
+      "variance_pct": -4.12,
+      "region": "APAC"
+    }
+  ],
+  "margin_by_year": [
+    {
+      "fy": 2019,
+      "margin_pct": 41.4
+    },
+    {
+      "fy": 2020,
+      "margin_pct": 37.3
+    },
+    {
+      "fy": 2021,
+      "margin_pct": 36.4
+    }
+  ]
+}
