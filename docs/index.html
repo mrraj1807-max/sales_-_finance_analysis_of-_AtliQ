@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AtliQ Hardware - Sales & Finance Dashboard</title>
+  <link rel="icon" type="image/jpeg" href="../assets/atliq_logo.jpg"/>
   <meta name="description" content="Interactive Sales and Finance Analytics Dashboard for AtliQ Hardware covering FY2019-FY2021 across 23 global markets."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -82,6 +83,7 @@
 </head>
 <body>
 <div class="header">
+  <img src="../assets/atliq_logo.jpg" alt="AtliQ Hardware Logo" style="width:80px;height:80px;border-radius:16px;margin-bottom:20px;box-shadow:0 8px 32px rgba(249,115,22,0.3);object-fit:contain;background:#fff;padding:6px;" />
   <div class="header-badge">Analytics Dashboard</div>
   <h1>AtliQ Hardware<br/>Sales &amp; Finance Analysis</h1>
   <p>End-to-end business intelligence across 23 global markets &middot; FY2019 - FY2021 &middot; Built in Microsoft Excel</p>
@@ -90,6 +92,10 @@
   </div>
 </div>
 <nav class="nav">
+  <div style="display:flex;align-items:center;gap:8px;padding-right:16px;border-right:1px solid rgba(0,212,170,0.2);margin-right:4px;">
+    <img src="../assets/atliq_logo.jpg" alt="AtliQ" style="width:28px;height:28px;border-radius:6px;object-fit:contain;background:#fff;padding:2px;" />
+    <span style="font-family:Space Grotesk,sans-serif;font-size:13px;font-weight:600;color:#e8f0fe;white-space:nowrap;">AtliQ Hardware</span>
+  </div>
   <button class="nav-btn active" onclick="showSection('overview',this)">Overview</button>
   <button class="nav-btn" onclick="showSection('sales',this)">Sales Analysis</button>
   <button class="nav-btn" onclick="showSection('finance',this)">Finance</button>
@@ -241,6 +247,7 @@
   </div>
 </main>
 <footer class="footer">
+  <img src="../assets/atliq_logo.jpg" alt="AtliQ Logo" style="width:48px;height:48px;border-radius:10px;object-fit:contain;background:#fff;padding:4px;margin-bottom:12px;" /><br/>
   <p>AtliQ Hardware — Sales &amp; Finance Analysis &nbsp;|&nbsp; Built with Microsoft Excel · Power Query · DAX</p>
   <p style="margin-top:6px"><a href="https://github.com/your-github-username/sales_-_finance_analysis_of-_AtliQ">Star on GitHub</a> &nbsp;|&nbsp; <a href="../reports/">View PDF Reports</a></p>
   <p style="margin-top:8px; color: #334">Guided by Codebasics · Data Analytics Bootcamp</p>
@@ -291,3 +298,4 @@ renderOv();rendered.add('overview');
 </script>
 </body>
 </html>
+
